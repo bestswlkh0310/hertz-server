@@ -15,7 +15,7 @@ class MusicController(
     private val musicService: MusicService
 ) {
 
-    @GetMapping("/", "")
+    @GetMapping(value = ["/", ""])
     fun musics(): ResponseEntity<Any> {
         val musics = musicService.getMusics().map { it.toResponse() }
         return ResponseEntity.ok(musics)
@@ -32,5 +32,4 @@ class MusicController(
             .contentLength(music.file.length())
             .body(music.inputStream.readBytes())
     }
-
 }
