@@ -11,12 +11,15 @@ import com.bestswlkh0310.hertz.global.config.SecurityConfig
 import com.bestswlkh0310.hertz.global.exception.CustomException
 import com.bestswlkh0310.hertz.global.exception.ErrorCode
 import com.bestswlkh0310.hertz.global.jwt.JwtTokenUtil
+import com.bestswlkh0310.hertz.global.jwt.JwtType
 import org.springframework.stereotype.Service
+import kotlin.reflect.typeOf
 
 
 @Service
 class UserService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val jwtTokenUtil: JwtTokenUtil
 ) {
 
     fun registerUser(req: SignUpRequest): TokenResponse {
@@ -36,16 +39,14 @@ class UserService(
 
         userRepository.save(newUser)
 
-        val accessToken = JwtTokenUtil.createToken(
+        val accessToken = jwtTokenUtil.createToken(
             username = req.username,
-            key = SecurityConfig.secretKey,
-            expireTimeMs = JwtConstant.ACCESS_EXPIRED_AT
+            type = JwtType.ACCESS_TOKEN
         )
 
-        val refreshToken = JwtTokenUtil.createToken(
+        val refreshToken = jwtTokenUtil.createToken(
             username = req.username,
-            key = SecurityConfig.secretKey,
-            expireTimeMs = JwtConstant.REFRESH_EXPIRED_AT
+            type = JwtType.REFRESH_TOKEN
         )
 
         val tokenResponse = TokenResponse(
@@ -65,16 +66,14 @@ class UserService(
             throw CustomException(ErrorCode.BAD_REQUEST)
         }
 
-        val accessToken = JwtTokenUtil.createToken(
+        val accessToken = jwtTokenUtil.createToken(
             username = req.username,
-            key = SecurityConfig.secretKey,
-            expireTimeMs = JwtConstant.ACCESS_EXPIRED_AT
+            type = JwtType.ACCESS_TOKEN
         )
 
-        val refreshToken = JwtTokenUtil.createToken(
+        val refreshToken = jwtTokenUtil.createToken(
             username = req.username,
-            key = SecurityConfig.secretKey,
-            expireTimeMs = JwtConstant.REFRESH_EXPIRED_AT
+            type = JwtType.REFRESH_TOKEN
         )
 
         val tokenResponse = TokenResponse(
@@ -85,17 +84,16 @@ class UserService(
     }
 
     fun refresh(refreshToken: String): TokenResponse {
-        val isExpired = JwtTokenUtil.isExpired(refreshToken, SecurityConfig.secretKey)
+        val isExpired = jwtTokenUtil.isExpired(refreshToken, SecurityConfig.secretKey)
         if (isExpired) {
             throw CustomException(ErrorCode.BAD_REQUEST)
         }
 
-        val username = JwtTokenUtil.getUsername(refreshToken, SecurityConfig.secretKey)
+        val username = jwtTokenUtil.getUsername(refreshToken, SecurityConfig.secretKey)
 
-        val newAccessToken = JwtTokenUtil.createToken(
+        val newAccessToken = jwtTokenUtil.createToken(
             username = username,
-            SecurityConfig.secretKey,
-            JwtConstant.ACCESS_EXPIRED_AT
+            type = JwtType.ACCESS_TOKEN
         )
 
         val tokenResponse = TokenResponse(

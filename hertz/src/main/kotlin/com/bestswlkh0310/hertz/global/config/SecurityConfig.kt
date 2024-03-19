@@ -2,6 +2,7 @@ package com.bestswlkh0310.hertz.global.config
 
 import com.bestswlkh0310.hertz.domain.user.core.service.UserService
 import com.bestswlkh0310.hertz.global.filter.JwtTokenFilter
+import com.bestswlkh0310.hertz.global.jwt.JwtTokenUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -14,7 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val userService: UserService
+    private val userService: UserService,
+    private val jwtTokenUtil: JwtTokenUtil
 ) {
     @Bean
     fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
@@ -29,7 +31,7 @@ class SecurityConfig(
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .addFilterBefore(
-                JwtTokenFilter(userService, secretKey),
+                JwtTokenFilter(userService, secretKey, jwtTokenUtil),
                 UsernamePasswordAuthenticationFilter::class.java
             )
             .authorizeHttpRequests {
