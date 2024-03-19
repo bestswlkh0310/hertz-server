@@ -17,7 +17,7 @@ class MusicController(
 
     @GetMapping(value = ["/", ""])
     fun musics(): ResponseEntity<Any> {
-        val musics = musicService.getMusics().map { it.toResponse() }
+        val musics = musicService.getMusics()
         return ResponseEntity.ok(musics)
     }
 
