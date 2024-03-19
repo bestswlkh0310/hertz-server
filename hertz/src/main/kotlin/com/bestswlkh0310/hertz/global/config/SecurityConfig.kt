@@ -1,7 +1,7 @@
 package com.bestswlkh0310.hertz.global.config
 
-import com.bestswlkh0310.hertz.domain.user.UserService
-import com.bestswlkh0310.hertz.global.JwtTokenFilter
+import com.bestswlkh0310.hertz.domain.user.core.service.UserService
+import com.bestswlkh0310.hertz.global.filter.JwtTokenFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
