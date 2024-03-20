@@ -2,9 +2,11 @@ package com.bestswlkh0310.hertz.global.filter
 
 import com.bestswlkh0310.hertz.domain.user.core.service.UserService
 import com.bestswlkh0310.hertz.global.jwt.JwtTokenUtil
+import com.bestswlkh0310.hertz.global.jwt.JwtType
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -15,9 +17,11 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtTokenFilter(
     private val userService: UserService,
-    private val accessTokenSecret: String,
     private val jwtTokenUtil: JwtTokenUtil
 ) : OncePerRequestFilter() {
+
+    @Value("\${jwt.access-token-secret}")
+    lateinit var accessTokenSecret: String
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -42,15 +46,15 @@ class JwtTokenFilter(
         val token = authorizationHeader.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
 
         // 전송받은 Jwt Token이 만료되었으면 => 다음 필터 진행(인증 X)
-        if (jwtTokenUtil.isExpired(token, accessTokenSecret)) {
+        if (jwtTokenUtil.isExpired(token, JwtType.ACCESS_TOKEN)) {
             filterChain.doFilter(request, response)
             return
         }
 
-        // Jwt Token에서 loginId 추출
-        val username = jwtTokenUtil.getUsername(token, accessTokenSecret)
+        // Jwt Token 에서 username 추출
+        val username = jwtTokenUtil.getUsername(token, JwtType.ACCESS_TOKEN)
 
-        // 추출한 loginId로 User 찾아오기
+        // 추출한 username 로 User 찾아오기
         val user = userService.getUser(username)
 
         // loginUser 정보로 UsernamePasswordAuthenticationToken 발급

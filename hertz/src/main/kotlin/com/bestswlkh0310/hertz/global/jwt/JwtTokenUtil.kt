@@ -16,34 +16,39 @@ class JwtTokenUtil {
     lateinit var refreshTokenSecret: String
 
     fun createToken(username: String, type: JwtType): String {
-        return when (type) {
-            JwtType.ACCESS_TOKEN -> createToken(username, accessTokenSecret, JwtConstant.ACCESS_EXPIRED_AT)
-            JwtType.REFRESH_TOKEN -> createToken(username, refreshTokenSecret, JwtConstant.REFRESH_EXPIRED_AT)
-        }
-    }
-
-    private fun createToken(username: String, key: String, expireTimeMs: Long): String {
         val claims = Jwts.claims()
         claims[JwtConstant.USERNAME] = username
 
         return Jwts.builder()
             .setClaims(claims)
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + expireTimeMs))
-            .signWith(SignatureAlgorithm.HS256, key)
+            .setExpiration(Date(System.currentTimeMillis() + getExpiredByType(type)))
+            .signWith(SignatureAlgorithm.HS256, getSecretByType(type).toByteArray())
             .compact()
     }
 
-    fun getUsername(token: String, secretKey: String): String {
-        return extractClaims(token, secretKey)[JwtConstant.USERNAME].toString()
+    fun getUsername(token: String, type: JwtType): String {
+        return extractClaims(token, type)[JwtConstant.USERNAME].toString()
     }
 
-    fun isExpired(token: String, secretKey: String): Boolean {
-        val expiredDate: Date = extractClaims(token, secretKey).expiration
+    fun isExpired(token: String, type: JwtType): Boolean {
+        val expiredDate: Date = extractClaims(token, type).expiration
         return expiredDate.before(Date())
     }
 
-    private fun extractClaims(token: String, secretKey: String): Claims {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).body
+    private fun extractClaims(token: String, type: JwtType): Claims {
+        return Jwts.parser()
+            .setSigningKey(getSecretByType(type).toByteArray())
+            .parseClaimsJws(token).body
+    }
+
+    private fun getSecretByType(type: JwtType) = when (type) {
+        JwtType.ACCESS_TOKEN -> accessTokenSecret
+        JwtType.REFRESH_TOKEN -> refreshTokenSecret
+    }
+
+    private fun getExpiredByType(type: JwtType) = when (type) {
+        JwtType.ACCESS_TOKEN -> JwtConstant.ACCESS_EXPIRED_AT
+        JwtType.REFRESH_TOKEN -> JwtConstant.REFRESH_EXPIRED_AT
     }
 }
