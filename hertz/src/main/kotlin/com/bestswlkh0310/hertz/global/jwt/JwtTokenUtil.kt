@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class JwtTokenUtil {
-
+class JwtTokenUtil(
     @Value("\${jwt.access-token-secret}")
-    lateinit var accessTokenSecret: String
-    @Value("\${jwt.refresh-token-secret}")
-    lateinit var refreshTokenSecret: String
+    private val accessTokenSecret: String,
 
+    @Value("\${jwt.refresh-token-secret}")
+    private val refreshTokenSecret: String
+) {
     fun createToken(username: String, type: JwtType): String {
         val claims = Jwts.claims()
         claims[JwtConstant.USERNAME] = username
