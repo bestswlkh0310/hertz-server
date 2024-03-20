@@ -1,5 +1,7 @@
 package com.bestswlkh0310.hertz.global.jwt
 
+import com.bestswlkh0310.hertz.global.exception.CustomException
+import com.bestswlkh0310.hertz.global.exception.ErrorCode
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
