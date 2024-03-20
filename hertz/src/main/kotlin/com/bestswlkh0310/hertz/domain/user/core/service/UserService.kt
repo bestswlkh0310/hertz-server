@@ -74,7 +74,7 @@ class UserService(
     fun refresh(refreshToken: String): TokenResponse {
         val isExpired = jwtTokenUtil.isExpired(refreshToken, JwtType.REFRESH_TOKEN)
         if (isExpired) {
-            throw CustomException(ErrorCode.BAD_REQUEST)
+            throw CustomException(ErrorCode.INVALID_AUTH_TOKEN)
         }
 
         val username = jwtTokenUtil.getUsername(refreshToken, JwtType.REFRESH_TOKEN)
