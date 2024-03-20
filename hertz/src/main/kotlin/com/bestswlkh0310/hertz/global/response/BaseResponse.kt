@@ -1,5 +1,6 @@
-package com.bestswlkh0310.hertz.global.base
+package com.bestswlkh0310.hertz.global.response
 
+import com.bestswlkh0310.hertz.global.exception.ErrorCode
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,5 +19,6 @@ data class BaseResponse<T>(
             )
             return ResponseEntity(body, headers, httpStatus)
         }
+
     }
 }

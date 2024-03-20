@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface LikeRepository: CrudRepository<LikeEntity, Int> {
     fun findByMusicAndUser(music: MusicEntity, user: UserEntity): LikeEntity?
+    fun existsByMusicAndUser(music: MusicEntity, user: UserEntity): Boolean
 }

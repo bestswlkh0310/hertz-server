@@ -3,7 +3,7 @@ package com.bestswlkh0310.hertz.domain.user.api.controller
 import com.bestswlkh0310.hertz.domain.user.core.service.UserService
 import com.bestswlkh0310.hertz.domain.user.api.dto.request.SignInRequest
 import com.bestswlkh0310.hertz.domain.user.api.dto.request.SignUpRequest
-import com.bestswlkh0310.hertz.global.base.BaseResponse
+import com.bestswlkh0310.hertz.global.response.BaseResponse
 import com.bestswlkh0310.hertz.global.common.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

@@ -8,18 +8,16 @@ data class MusicResponse(
     val id: Int,
     val music: String,
     val author: String,
+    val isLiked: Boolean
 ) {
 
-    fun toPathResponse(): ClassPathResource {
-        return ClassPathResource("${ResourcePath.MUSIC}/${music}")
-    }
 
     companion object {
-        fun fromEntity(musicEntity: MusicEntity): MusicResponse
-                = MusicResponse(
+        fun fromEntity(musicEntity: MusicEntity, isLiked: Boolean): MusicResponse = MusicResponse(
             id = musicEntity.id,
             music = musicEntity.music,
-            author = musicEntity.author
+            author = musicEntity.author,
+            isLiked = isLiked
         )
     }
 }
