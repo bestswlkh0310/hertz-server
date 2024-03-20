@@ -12,6 +12,7 @@ import com.bestswlkh0310.hertz.global.exception.CustomException
 import com.bestswlkh0310.hertz.global.exception.ErrorCode
 import com.bestswlkh0310.hertz.global.jwt.JwtTokenUtil
 import com.bestswlkh0310.hertz.global.jwt.JwtType
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import kotlin.reflect.typeOf
 
@@ -39,15 +40,9 @@ class UserService(
 
         userRepository.save(newUser)
 
-        val accessToken = jwtTokenUtil.createToken(
-            username = req.username,
-            type = JwtType.ACCESS_TOKEN
-        )
+        val accessToken = jwtTokenUtil.createToken(req.username, JwtType.ACCESS_TOKEN)
 
-        val refreshToken = jwtTokenUtil.createToken(
-            username = req.username,
-            type = JwtType.REFRESH_TOKEN
-        )
+        val refreshToken = jwtTokenUtil.createToken(req.username, JwtType.REFRESH_TOKEN)
 
         val tokenResponse = TokenResponse(
             accessToken = accessToken,
@@ -66,15 +61,8 @@ class UserService(
             throw CustomException(ErrorCode.BAD_REQUEST)
         }
 
-        val accessToken = jwtTokenUtil.createToken(
-            username = req.username,
-            type = JwtType.ACCESS_TOKEN
-        )
-
-        val refreshToken = jwtTokenUtil.createToken(
-            username = req.username,
-            type = JwtType.REFRESH_TOKEN
-        )
+        val accessToken = jwtTokenUtil.createToken(req.username, JwtType.ACCESS_TOKEN)
+        val refreshToken = jwtTokenUtil.createToken(req.username, JwtType.REFRESH_TOKEN)
 
         val tokenResponse = TokenResponse(
             accessToken = accessToken,
@@ -84,17 +72,13 @@ class UserService(
     }
 
     fun refresh(refreshToken: String): TokenResponse {
-        val isExpired = jwtTokenUtil.isExpired(refreshToken, SecurityConfig.secretKey)
+        val isExpired = jwtTokenUtil.isExpired(refreshToken, JwtType.REFRESH_TOKEN)
         if (isExpired) {
             throw CustomException(ErrorCode.BAD_REQUEST)
         }
 
-        val username = jwtTokenUtil.getUsername(refreshToken, SecurityConfig.secretKey)
-
-        val newAccessToken = jwtTokenUtil.createToken(
-            username = username,
-            type = JwtType.ACCESS_TOKEN
-        )
+        val username = jwtTokenUtil.getUsername(refreshToken, JwtType.REFRESH_TOKEN)
+        val newAccessToken = jwtTokenUtil.createToken(username, JwtType.ACCESS_TOKEN)
 
         val tokenResponse = TokenResponse(
             accessToken = newAccessToken,
@@ -109,5 +93,4 @@ class UserService(
         user?: throw CustomException(ErrorCode.USER_NOT_FOUND)
         return user
     }
-
 }

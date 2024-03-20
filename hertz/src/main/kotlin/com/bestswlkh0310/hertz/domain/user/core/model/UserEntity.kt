@@ -4,7 +4,7 @@ import com.bestswlkh0310.hertz.domain.user.core.model.consts.UserRole
 import jakarta.persistence.*
 
 @Entity
-data class UserEntity(
+class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,

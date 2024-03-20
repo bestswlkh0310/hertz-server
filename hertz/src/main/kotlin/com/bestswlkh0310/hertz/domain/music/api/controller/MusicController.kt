@@ -1,6 +1,7 @@
 package com.bestswlkh0310.hertz.domain.music.api.controller
 
 import com.bestswlkh0310.hertz.domain.music.core.service.MusicService
+import com.bestswlkh0310.hertz.global.base.BaseResponse
 import com.bestswlkh0310.hertz.global.common.Api
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -19,7 +20,7 @@ class MusicController(
     @GetMapping(Api.Music.ALL)
     fun musics(): ResponseEntity<Any> {
         val musics = musicService.getMusics()
-        return ResponseEntity.ok(musics)
+        return BaseResponse.ok(musics)
     }
 
     @GetMapping("${Api.Music.MUSIC}/{id}")

@@ -14,11 +14,7 @@ class HealthController {
 
     @GetMapping(Api.Health.HEALTH)
     fun checkHealth(): ResponseEntity<Any> {
-        val response = BaseResponse<Any>(
-            status = HttpStatus.OK.value(),
-            message = "ok"
-        )
-        return ResponseEntity.ok(response)
+        return BaseResponse.ok("ok")
     }
 
 }
