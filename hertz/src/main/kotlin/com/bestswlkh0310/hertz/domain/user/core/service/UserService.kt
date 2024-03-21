@@ -1,26 +1,28 @@
 package com.bestswlkh0310.hertz.domain.user.core.service
 
+import com.bestswlkh0310.hertz.domain.email.api.dto.EmailMessage
+import com.bestswlkh0310.hertz.domain.email.core.service.EmailService
 import com.bestswlkh0310.hertz.domain.user.api.dto.request.SignInRequest
 import com.bestswlkh0310.hertz.domain.user.api.dto.request.SignUpRequest
 import com.bestswlkh0310.hertz.domain.user.api.dto.response.TokenResponse
 import com.bestswlkh0310.hertz.domain.user.core.model.UserEntity
-import com.bestswlkh0310.hertz.global.jwt.JwtConstant
 import com.bestswlkh0310.hertz.domain.user.core.model.consts.UserRole
 import com.bestswlkh0310.hertz.domain.user.core.repository.UserRepository
-import com.bestswlkh0310.hertz.global.config.SecurityConfig
+import com.bestswlkh0310.hertz.domain.user.core.store.EmailCode
+import com.bestswlkh0310.hertz.global.common.EmailCodeUtil
 import com.bestswlkh0310.hertz.global.exception.CustomException
 import com.bestswlkh0310.hertz.global.exception.ErrorCode
 import com.bestswlkh0310.hertz.global.jwt.JwtTokenUtil
 import com.bestswlkh0310.hertz.global.jwt.JwtType
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import kotlin.reflect.typeOf
 
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val jwtTokenUtil: JwtTokenUtil
+    private val jwtTokenUtil: JwtTokenUtil,
+    private val emailStoreService: EmailStoreService,
+    private val emailService: EmailService
 ) {
 
     fun registerUser(req: SignUpRequest): TokenResponse {
@@ -30,6 +32,10 @@ class UserService(
         }
         if (req.password != req.passwordCheck) {
             throw CustomException(ErrorCode.BAD_REQUEST)
+        }
+        val emailCode = EmailCode(to = req.username, code = req.code)
+        if (!emailStoreService.isExist(emailCode)) {
+            throw CustomException(ErrorCode.INVALID_EMAIL_CODE)
         }
 
         val newUser = UserEntity(
@@ -41,7 +47,6 @@ class UserService(
         userRepository.save(newUser)
 
         val accessToken = jwtTokenUtil.createToken(req.username, JwtType.ACCESS_TOKEN)
-
         val refreshToken = jwtTokenUtil.createToken(req.username, JwtType.REFRESH_TOKEN)
 
         val tokenResponse = TokenResponse(
@@ -86,6 +91,22 @@ class UserService(
         )
 
         return tokenResponse
+    }
+
+    fun sendEmailCode(to: String) {
+        val code = EmailCodeUtil.generateEmailCode(EmailCodeUtil.DEFAULT_LENGTH)
+        val emailCode = EmailCode(
+            to = to,
+            code = code
+        )
+        emailStoreService.saveEmailCode(emailCode)
+
+        val emailMessage = EmailMessage(
+            to = to,
+            subject = EmailCodeUtil.DEFAULT_SUBJECT,
+            message = "이메일 인증 코드: $code"
+        )
+        emailService.sendMessage(emailMessage)
     }
 
     fun getUser(username: String): UserEntity {

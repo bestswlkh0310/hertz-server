@@ -2,6 +2,7 @@ package com.bestswlkh0310.hertz
 
 import com.bestswlkh0310.hertz.domain.email.api.dto.EmailMessage
 import com.bestswlkh0310.hertz.domain.email.core.service.EmailService
+import com.bestswlkh0310.hertz.global.common.EmailCodeUtil
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -29,5 +30,13 @@ class HertzApplicationTests {
 			message = "123456"
 		)
 		emailService.sendMessage(emailMessage)
+	}
+
+	@Test
+	fun generateEmailCode() {
+		println(EmailCodeUtil.generateEmailCode(6))
+		println(EmailCodeUtil.generateEmailCode(8))
+		println(EmailCodeUtil.generateEmailCode(10))
+		println(EmailCodeUtil.generateEmailCode(100))
 	}
 }

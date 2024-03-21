@@ -12,6 +12,7 @@ sealed interface Api {
         const val SIGN_IN = "/sign-in"
         const val SIGN_UP = "/sign-up"
         const val REFRESH = "/refresh"
+        const val SEND_EMAIL_CODE = "/send-email-code"
     }
 
     data object Music: Api {

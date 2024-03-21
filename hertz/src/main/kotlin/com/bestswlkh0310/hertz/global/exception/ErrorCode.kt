@@ -8,6 +8,7 @@ enum class ErrorCode(
 ) {
     /* 400 BAD_REQUEST : 잘못된 요청 */
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다"),
+    INVALID_EMAIL_CODE(HttpStatus.BAD_REQUEST, "잘못된 이메일 코드 입니다"),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
     INVALID_AUTH_TOKEN(HttpStatus.UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),

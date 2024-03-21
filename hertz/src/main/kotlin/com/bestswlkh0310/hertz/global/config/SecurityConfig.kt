@@ -46,7 +46,12 @@ class SecurityConfig(
                 JwtTokenFilter::class.java
             )
             .authorizeHttpRequests {
-                it.requestMatchers("${Api.User.PATH}${Api.User.SIGN_UP}", "${Api.User.PATH}${Api.User.SIGN_IN}", "${Api.User.PATH}${Api.User.REFRESH}").permitAll()
+                it.requestMatchers(
+                    "${Api.User.PATH}${Api.User.SIGN_UP}",
+                    "${Api.User.PATH}${Api.User.SIGN_IN}",
+                    "${Api.User.PATH}${Api.User.REFRESH}",
+                    "${Api.User.PATH}${Api.User.SEND_EMAIL_CODE}"
+                ).permitAll()
                     .anyRequest()
                     .authenticated()
             }

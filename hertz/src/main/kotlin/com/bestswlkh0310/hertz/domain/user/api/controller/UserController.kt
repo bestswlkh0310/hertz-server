@@ -1,5 +1,6 @@
 package com.bestswlkh0310.hertz.domain.user.api.controller
 
+import com.bestswlkh0310.hertz.domain.user.api.dto.request.EmailCodeRequest
 import com.bestswlkh0310.hertz.domain.user.core.service.UserService
 import com.bestswlkh0310.hertz.domain.user.api.dto.request.SignInRequest
 import com.bestswlkh0310.hertz.domain.user.api.dto.request.SignUpRequest
@@ -36,5 +37,13 @@ class UserController(
     ): ResponseEntity<out Any> {
         val response = userService.refresh(refreshToken)
         return BaseResponse.ok(response)
+    }
+
+    @PostMapping(Api.User.SEND_EMAIL_CODE)
+    fun sendEmailCode(
+        @RequestBody emailCodeRequest: EmailCodeRequest
+    ): ResponseEntity<Any> {
+        userService.sendEmailCode(emailCodeRequest.to)
+        return BaseResponse.ok<Unit>()
     }
 }
