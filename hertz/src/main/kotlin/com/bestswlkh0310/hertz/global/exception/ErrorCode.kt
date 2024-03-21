@@ -20,5 +20,6 @@ enum class ErrorCode(
     DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "데이터가 이미 존재합니다."),
 
     /* 500 INTERNAL SERVER ERROR : 서버가 브라우저나 클라이언트의 요청을 이행하지 못하게 하는 예기치 않은 조건이나 구성 문제가 발생했음 */
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 문제가 발생했습니다 ㅠㅠ")
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에 문제가 발생했습니다."),
+    SEND_EMAIL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이메일을 보내는 데에 실패했습니다")
 }
