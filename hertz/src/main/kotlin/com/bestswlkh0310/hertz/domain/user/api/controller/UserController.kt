@@ -26,7 +26,7 @@ class UserController(
     @PostMapping(Api.User.SIGN_IN)
     fun signIn(
         @RequestBody signInRequest: SignInRequest
-    ): ResponseEntity<out Any> {
+    ): ResponseEntity<Any> {
         val response = userService.signIn(signInRequest)
         return BaseResponse.ok(response)
     }
@@ -34,7 +34,7 @@ class UserController(
     @PostMapping(Api.User.REFRESH)
     fun refresh(
         @RequestHeader("refresh-token") refreshToken: String
-    ): ResponseEntity<out Any> {
+    ): ResponseEntity<Any> {
         val response = userService.refresh(refreshToken)
         return BaseResponse.ok(response)
     }
