@@ -16,6 +16,7 @@ enum class ErrorCode(
 
     /* 403: FORBIDDEN : 서버가 요청을 이해하지만 승인을 거부함  */
     CAN_NOT_ACCESS_PLAYLIST(HttpStatus.FORBIDDEN, "해당 플레이리스트에 접근할 수 없습니다."),
+    FORBIDDEN(HttpStatus.FORBIDDEN, "접근할 수 없습니다."),
 
     /* 404 NOT_FOUND : Resource 를 찾을 수 없음 */
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당하는 정보의 사용자를 찾을 수 없습니다."),

@@ -9,7 +9,7 @@ data class ErrorResponse(
     val message: String,
 ) {
     companion object {
-        fun fromErrorCode(e: ErrorCode): ResponseEntity<ErrorResponse> {
+        fun makeResponseEntity(e: ErrorCode): ResponseEntity<ErrorResponse> {
             val body = ErrorResponse(
                 status = e.httpStatus.value(),
                 code = e.name,
