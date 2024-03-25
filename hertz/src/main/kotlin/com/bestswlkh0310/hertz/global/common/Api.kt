@@ -39,6 +39,7 @@ sealed interface Api {
 
         const val PLAYLISTS = ""
         const val CREATE_PLAYLIST = "/create"
-        const val ADD_PLAYLIST = "/add"
+        const val ADD_MUSIC = "/add-music"
+        const val REMOVE_MUSIC_PLAYLIST = "/remove-music-playlist"
     }
 }

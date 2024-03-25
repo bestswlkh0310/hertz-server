@@ -8,7 +8,7 @@ import jakarta.persistence.*
 class MusicPlaylistEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Int? = null,
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "music_id")
     val music: MusicEntity,
