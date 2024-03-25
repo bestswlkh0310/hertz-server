@@ -1,16 +1,17 @@
-package com.bestswlkh0310.hertz.domain.music.core.model
+package com.bestswlkh0310.hertz.domain.playlist.core.model
 
+import com.bestswlkh0310.hertz.domain.music.core.model.MusicEntity
 import com.bestswlkh0310.hertz.domain.musicplaylist.core.model.MusicPlaylistEntity
-import com.bestswlkh0310.hertz.domain.playlist.core.model.PlaylistEntity
 import jakarta.persistence.*
 
 @Entity
-class MusicEntity(
+class PlaylistEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
-    val music: String,
+    val title: String,
     val author: String,
-    @OneToMany(mappedBy = "music")
+    val image: String,
+    @OneToMany(mappedBy = "playlist")
     val musicPlaylists: List<MusicPlaylistEntity>
 )
