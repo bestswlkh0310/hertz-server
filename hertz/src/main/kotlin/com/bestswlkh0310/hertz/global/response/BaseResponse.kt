@@ -18,6 +18,5 @@ data class BaseResponse<T>(
             )
             return ResponseEntity(body, headers, httpStatus)
         }
-
     }
 }
