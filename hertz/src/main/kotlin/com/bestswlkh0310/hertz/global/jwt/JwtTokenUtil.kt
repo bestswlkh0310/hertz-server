@@ -39,9 +39,13 @@ class JwtTokenUtil(
     }
 
     private fun extractClaims(token: String, type: JwtType): Claims {
-        return Jwts.parser()
-            .setSigningKey(getSecretByType(type).toByteArray())
-            .parseClaimsJws(token).body
+        try {
+            return Jwts.parser()
+                .setSigningKey(getSecretByType(type).toByteArray())
+                .parseClaimsJws(token).body
+        } catch (e: Exception) {
+            throw CustomException(ErrorCode.INVALID_AUTH_TOKEN)
+        }
     }
 
     private fun getSecretByType(type: JwtType) = when (type) {
