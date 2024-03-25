@@ -14,5 +14,5 @@ class UserEntity(
     @Enumerated(EnumType.STRING)
     val role: UserRole,
     @OneToMany(mappedBy = "user")
-    val playlists: List<PlaylistEntity>
+    val playlists: List<PlaylistEntity> = arrayListOf()
 )

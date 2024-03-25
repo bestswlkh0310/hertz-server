@@ -11,10 +11,9 @@ data class MusicResponse(
     val isLiked: Boolean
 ) {
 
-
     companion object {
         fun fromEntity(musicEntity: MusicEntity, isLiked: Boolean): MusicResponse = MusicResponse(
-            id = musicEntity.id,
+            id = musicEntity.id?: -1,
             music = musicEntity.music,
             author = musicEntity.author,
             isLiked = isLiked

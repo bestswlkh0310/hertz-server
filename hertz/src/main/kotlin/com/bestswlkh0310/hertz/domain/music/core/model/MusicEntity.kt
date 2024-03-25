@@ -8,9 +8,9 @@ import jakarta.persistence.*
 class MusicEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Int? = null,
     val music: String,
     val author: String,
     @OneToMany(mappedBy = "music")
-    val musicPlaylists: List<MusicPlaylistEntity>
+    val musicPlaylists: List<MusicPlaylistEntity> = arrayListOf()
 )
