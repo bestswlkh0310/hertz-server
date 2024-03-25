@@ -11,10 +11,10 @@ class LikeEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
 
-    @ManyToOne(targetEntity = MusicEntity::class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = MusicEntity::class, fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "music_id")
     val music: MusicEntity,
 
-    @ManyToOne(targetEntity = UserEntity::class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = UserEntity::class, fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     val user: UserEntity
 )
