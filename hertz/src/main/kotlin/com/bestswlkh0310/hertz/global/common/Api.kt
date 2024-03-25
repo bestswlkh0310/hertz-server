@@ -33,4 +33,12 @@ sealed interface Api {
 
         const val HEALTH = ""
     }
+
+    data object Playlist: Api {
+        const val PATH = "${V1}/playlists"
+
+        const val PLAYLISTS = ""
+        const val CREATE_PLAYLIST = "/create"
+        const val ADD_PLAYLIST = "/add"
+    }
 }
