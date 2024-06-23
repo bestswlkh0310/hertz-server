@@ -5,7 +5,6 @@ import com.bestswlkh0310.hertz.domain.email.core.service.EmailService
 import com.bestswlkh0310.hertz.domain.music.core.model.MusicEntity
 import com.bestswlkh0310.hertz.domain.music.core.repository.MusicRepository
 import com.bestswlkh0310.hertz.domain.music.core.service.MusicService
-import com.bestswlkh0310.hertz.global.common.EmailCodeUtil
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
