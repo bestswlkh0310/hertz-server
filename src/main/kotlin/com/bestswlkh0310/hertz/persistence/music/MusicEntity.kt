@@ -1,14 +1,14 @@
 package com.bestswlkh0310.hertz.persistence.music
 
 import com.bestswlkh0310.hertz.core.music.domain.Music
-import com.bestswlkh0310.hertz.core.user.domain.User
+import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
-@Entity(name = "music")
+@Entity(name = TableName.MUSIC)
 @EntityListeners(AuditingEntityListener::class)
 class MusicEntity(
     @Id
