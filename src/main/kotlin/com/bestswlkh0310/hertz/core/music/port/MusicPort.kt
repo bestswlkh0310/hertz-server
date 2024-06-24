@@ -10,4 +10,9 @@ interface MusicPort {
      * id: Music Id
      */
     fun remove(id: Int)
+
+    /**
+     * id: Music id
+     */
+    fun exists(id: Int): Boolean
 }

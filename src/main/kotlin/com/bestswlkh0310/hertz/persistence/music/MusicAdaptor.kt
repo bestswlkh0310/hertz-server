@@ -17,4 +17,7 @@ class MusicAdaptor(
 
     override fun remove(id: Int) =
         musicRepository.deleteById(id)
+
+    override fun exists(id: Int) =
+        musicRepository.existsById(id)
 }

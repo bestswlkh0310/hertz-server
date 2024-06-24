@@ -5,7 +5,6 @@ import com.bestswlkh0310.hertz.core.music.port.MusicPort
 import com.bestswlkh0310.hertz.core.music.req.SaveMusicReq
 import com.bestswlkh0310.hertz.core.music.res.MusicRes
 import com.bestswlkh0310.hertz.core.user.port.GetCurrentUserPort
-import com.bestswlkh0310.hertz.core.user.port.UserPort
 import com.bestswlkh0310.hertz.infra.exception.CustomException
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import org.springframework.stereotype.Service
@@ -32,6 +31,12 @@ class MusicServiceImpl(
         return MusicRes.of(savedMusic)
     }
 
-    override fun remove(musicId: Int) =
+    override fun remove(musicId: Int): String {
+        val exists = musicPort.exists(musicId)
+        if (!exists) {
+            throw CustomException(ErrorCode.NOT_FOUND)
+        }
         musicPort.remove(musicId)
+        return "success"
+    }
 }

@@ -5,7 +5,6 @@ import com.bestswlkh0310.hertz.core.spotlike.SpotLikePort
 import com.bestswlkh0310.hertz.core.spotlike.domain.SpotLike
 import com.bestswlkh0310.hertz.core.spotlike.res.SpotLikeRes
 import com.bestswlkh0310.hertz.core.user.port.GetCurrentUserPort
-import com.bestswlkh0310.hertz.core.user.port.UserPort
 import com.bestswlkh0310.hertz.infra.exception.CustomException
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import org.springframework.stereotype.Service

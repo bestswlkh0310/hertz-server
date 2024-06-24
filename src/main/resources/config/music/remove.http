@@ -1,0 +1,3 @@
+DELETE {{root-path}}/api/v1/music/remove/5
+Content-Type: application/json
+Authorization: {{test-token}}
