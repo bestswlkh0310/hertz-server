@@ -2,6 +2,7 @@ package com.bestswlkh0310.hertz.core.music.service
 
 import com.bestswlkh0310.hertz.core.music.domain.Music
 import com.bestswlkh0310.hertz.core.music.port.MusicPort
+import com.bestswlkh0310.hertz.core.music.req.EditMusicReq
 import com.bestswlkh0310.hertz.core.music.req.SaveMusicReq
 import com.bestswlkh0310.hertz.core.music.res.MusicRes
 import com.bestswlkh0310.hertz.core.user.port.GetCurrentUserPort
@@ -43,5 +44,16 @@ class MusicServiceImpl(
     override fun getAll(id: Int): List<MusicRes> {
         val musics = musicPort.getAll(id)
         return musics.map { MusicRes.of(it) }
+    }
+
+    override fun editMusic(req: EditMusicReq): MusicRes {
+        val music = musicPort.get(req.id) ?: throw CustomException(ErrorCode.NOT_FOUND)
+        val userId = getCurrentUserPort.getId() ?: throw CustomException(ErrorCode.NOT_FOUND)
+        if (music.user.id != userId) {
+            throw CustomException(ErrorCode.FORBIDDEN)
+        }
+        val edittedMusic = music.copy(name = req.name, description = req.description)
+        musicPort.save(edittedMusic)
+        return MusicRes.of(edittedMusic)
     }
 }

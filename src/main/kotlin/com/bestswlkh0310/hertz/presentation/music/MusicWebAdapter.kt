@@ -1,11 +1,13 @@
 package com.bestswlkh0310.hertz.presentation.music
 
+import com.bestswlkh0310.hertz.core.music.req.EditMusicReq
 import com.bestswlkh0310.hertz.core.music.req.SaveMusicReq
 import com.bestswlkh0310.hertz.core.music.service.MusicService
 import com.bestswlkh0310.hertz.infra.common.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -41,5 +43,11 @@ class MusicWebAdapter(
     fun getAll(
         @RequestParam("userId") userId: Int
     ) = musicService.getAll(userId)
+        .let { ResponseEntity.ok(it) }
+
+    @PatchMapping(Api.Music.EDIT)
+    fun edit(
+        @RequestBody req: EditMusicReq
+    ) = musicService.editMusic(req)
         .let { ResponseEntity.ok(it) }
 }

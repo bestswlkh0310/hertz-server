@@ -1,0 +1,9 @@
+PATCH {{root-path}}/api/v1/music/edit
+Content-Type: application/json
+Authorization: {{test-token}}
+
+{
+  "id": 4,
+  "name": "n1",
+  "description": "desc"
+}

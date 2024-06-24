@@ -1,5 +1,6 @@
 package com.bestswlkh0310.hertz.core.music.service
 
+import com.bestswlkh0310.hertz.core.music.req.EditMusicReq
 import com.bestswlkh0310.hertz.core.music.req.SaveMusicReq
 import com.bestswlkh0310.hertz.core.music.res.MusicRes
 
@@ -12,4 +13,5 @@ interface MusicService {
      * id: User id
      */
     fun getAll(id: Int): List<MusicRes>
+    fun editMusic(req: EditMusicReq): MusicRes
 }

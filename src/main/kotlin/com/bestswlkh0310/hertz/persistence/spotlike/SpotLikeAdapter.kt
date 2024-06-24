@@ -15,6 +15,6 @@ class SpotLikeAdapter(
         spotLikeRepository.save(SpotLikeEntity.of(spotLike)).toDomain()
 
     override fun remove(userId: Int, musicId: Int) {
-        val id = spotLikeRepository.removeByUserIdAndMusicId(userId, musicId)
+        spotLikeRepository.removeByUserIdAndMusicId(userId, musicId)
     }
 }

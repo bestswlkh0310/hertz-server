@@ -24,9 +24,10 @@ sealed interface Api {
         const val PATH = "$V1/music"
 
         const val GET_ALL = "/all"
-        const val SEARCH = "search"
-        const val SAVE = "save"
-        const val REMOVE = "remove/{musicId}"
+        const val SEARCH = "/search"
+        const val SAVE = "/save"
+        const val REMOVE = "/remove/{musicId}"
+        const val EDIT = "/edit"
     }
 
     data object SpotLike : Api {
