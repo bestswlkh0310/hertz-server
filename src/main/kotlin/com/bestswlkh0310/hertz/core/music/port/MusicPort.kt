@@ -9,6 +9,7 @@ interface MusicPort {
      * id: User id
      */
     fun getAll(id: Int): List<Music>
+    fun getAll(id: List<Int>): List<Music>
     fun save(music: Music): Music
 
     /**
