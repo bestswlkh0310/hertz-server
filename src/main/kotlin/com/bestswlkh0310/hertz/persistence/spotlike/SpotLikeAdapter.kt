@@ -11,9 +11,10 @@ class SpotLikeAdapter(
     override fun exists(userId: Int, musicId: Int): Boolean =
         spotLikeRepository.existsByUserIdAndMusicId(userId, musicId)
 
-    override fun create(userId: Int, musicId: Int): SpotLike =
-        spotLikeRepository.insert(userId, musicId).toDomain()
+    override fun create(spotLike: SpotLike): SpotLike =
+        spotLikeRepository.save(SpotLikeEntity.of(spotLike)).toDomain()
 
-    override fun remove(spotId: Int): SpotLike =
-        spotLikeRepository.removeById(spotId).toDomain()
+    override fun remove(userId: Int, musicId: Int) {
+        val id = spotLikeRepository.removeByUserIdAndMusicId(userId, musicId)
+    }
 }

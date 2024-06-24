@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class SecurityConfig(
     private val jwtTokenFilter: JwtTokenFilter,
     private val jwtExceptionFilter: JwtExceptionFilter,
-//    private val forbiddenAuthenticationEntryPoint: ForbiddenAuthenticationEntryPoint,
+    private val forbiddenAuthenticationEntryPoint: ForbiddenAuthenticationEntryPoint,
 //    private val customAccessDeniedHandler: CustomAccessDeniedHandler,
 ) {
 
@@ -51,6 +51,9 @@ class SecurityConfig(
                 )
                     .permitAll()
                     .anyRequest().authenticated()
+            }
+            .exceptionHandling {
+                it.authenticationEntryPoint(forbiddenAuthenticationEntryPoint)
             }
             .build()
 }

@@ -21,7 +21,7 @@ class ForbiddenAuthenticationEntryPoint(
         response: HttpServletResponse,
         authException: AuthenticationException?
     ) {
-        println("forbidden")
+        println("ForbiddenAuthenticationEntryPoint.commence")
         setResponse(response)
     }
 

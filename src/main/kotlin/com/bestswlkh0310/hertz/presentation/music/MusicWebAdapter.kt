@@ -36,5 +36,4 @@ class MusicWebAdapter(
         @PathVariable("musicId") musicId: Int
     ) = musicService.remove(musicId)
         .let { ResponseEntity.ok(it) }
-
 }

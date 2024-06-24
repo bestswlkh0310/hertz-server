@@ -8,5 +8,5 @@ data class SpotLike(
     val id: Int = 0,
     val user: User,
     val music: Music,
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime = LocalDateTime.now()
 )

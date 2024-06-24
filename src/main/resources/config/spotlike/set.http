@@ -1,0 +1,3 @@
+POST localhost:8000/api/v1/spot-like/set/1
+Content-Type: application/json
+Authorization: {{test-token}}

@@ -23,11 +23,11 @@ class SpotLikeEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
 
-    @ManyToOne(targetEntity = UserEntity::class, cascade = [CascadeType.ALL])
+    @ManyToOne(targetEntity = UserEntity::class)
     @JoinColumn(referencedColumnName = "id", name = "user_id")
     val user: UserEntity,
 
-    @ManyToOne(targetEntity = MusicEntity::class, cascade = [CascadeType.ALL])
+    @ManyToOne(targetEntity = MusicEntity::class)
     @JoinColumn(referencedColumnName = "id", name = "music_id")
     val music: MusicEntity,
 
@@ -41,4 +41,13 @@ class SpotLikeEntity(
         music = music.toDomain(),
         createdAt = createdAt
     )
+
+    companion object {
+        fun of(spotLike: SpotLike) = SpotLikeEntity(
+            id = spotLike.id,
+            user = UserEntity.of(spotLike.user),
+            music = MusicEntity.of(spotLike.music),
+            createdAt = spotLike.createdAt
+        )
+    }
 }
