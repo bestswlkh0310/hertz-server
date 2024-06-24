@@ -18,6 +18,7 @@ sealed interface Api {
         const val PATH = "$V1/user"
 
         const val GET = "/{id}"
+        const val LEAVE = "/leave"
     }
 
     data object Music: Api {

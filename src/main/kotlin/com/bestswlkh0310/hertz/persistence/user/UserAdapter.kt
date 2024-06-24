@@ -20,4 +20,7 @@ class UserAdapter(
 
     override fun exists(email: String, password: String): Boolean =
         userRepository.existsByEmailAndPassword(email, password)
+
+    override fun remove(id: Int) =
+        userRepository.deleteById(id)
 }

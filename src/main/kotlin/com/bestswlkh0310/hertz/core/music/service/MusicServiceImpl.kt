@@ -48,7 +48,7 @@ class MusicServiceImpl(
 
     override fun editMusic(req: EditMusicReq): MusicRes {
         val music = musicPort.get(req.id) ?: throw CustomException(ErrorCode.NOT_FOUND)
-        val userId = getCurrentUserPort.getId() ?: throw CustomException(ErrorCode.NOT_FOUND)
+        val userId = getCurrentUserPort.get()?.id ?: throw CustomException(ErrorCode.NOT_FOUND)
         if (music.user.id != userId) {
             throw CustomException(ErrorCode.FORBIDDEN)
         }

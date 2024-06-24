@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component
 @Component
 class GetCurrentUserAdapter : GetCurrentUserPort {
     override fun get() = userDetails.user
-    override fun getId() = userDetails.user.id
     private val userDetails: CustomUserDetails
         get() {
             return (SecurityContextHolder.getContext().authentication.principal as CustomUserDetails)

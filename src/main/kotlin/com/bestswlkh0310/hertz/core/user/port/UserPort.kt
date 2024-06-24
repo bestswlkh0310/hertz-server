@@ -7,4 +7,5 @@ interface UserPort {
     fun getByEmail(email: String): User?
     fun insert(user: User): User
     fun exists(email: String, password: String): Boolean
+    fun remove(id: Int)
 }
