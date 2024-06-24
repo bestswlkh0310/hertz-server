@@ -1,6 +1,6 @@
 package com.bestswlkh0310.hertz.infra.security
 
-import com.bestswlkh0310.hertz.infra.common.Api
+import com.bestswlkh0310.hertz.presentation.common.Api
 import com.bestswlkh0310.hertz.infra.exception.CustomAccessDeniedHandler
 import com.bestswlkh0310.hertz.infra.exception.ForbiddenAuthenticationEntryPoint
 import com.bestswlkh0310.hertz.infra.filter.JwtExceptionFilter

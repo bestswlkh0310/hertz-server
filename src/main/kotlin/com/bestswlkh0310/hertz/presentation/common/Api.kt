@@ -1,4 +1,4 @@
-package com.bestswlkh0310.hertz.infra.common
+package com.bestswlkh0310.hertz.presentation.common
 
 sealed interface Api {
 
@@ -35,5 +35,14 @@ sealed interface Api {
         const val PATH = "$V1/spot-like"
 
         const val SET = "/set/{musicId}"
+    }
+
+    data object Playlist : Api {
+        const val PATH = "$V1/playlist"
+
+        const val GET_ALL = "/all"
+        const val CREATE = "/create"
+        const val EDIT = "/edit/{playlistId}"
+        const val REMOVE = "/remove/{playlistId}"
     }
 }
