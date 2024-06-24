@@ -4,6 +4,11 @@ import com.bestswlkh0310.hertz.core.music.domain.Music
 
 interface MusicPort {
     fun get(id: Int): Music?
+
+    /**
+     * id: User id
+     */
+    fun getAll(id: Int): List<Music>
     fun save(music: Music): Music
 
     /**

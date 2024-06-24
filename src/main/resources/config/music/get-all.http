@@ -1,0 +1,2 @@
+GET localhost:8000/api/v1/music/all?userId=1
+Authorization: {{test-token}}

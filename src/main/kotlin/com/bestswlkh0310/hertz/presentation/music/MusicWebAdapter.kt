@@ -36,4 +36,10 @@ class MusicWebAdapter(
         @PathVariable("musicId") musicId: Int
     ) = musicService.remove(musicId)
         .let { ResponseEntity.ok(it) }
+
+    @GetMapping(Api.Music.GET_ALL)
+    fun getAll(
+        @RequestParam("userId") userId: Int
+    ) = musicService.getAll(userId)
+        .let { ResponseEntity.ok(it) }
 }

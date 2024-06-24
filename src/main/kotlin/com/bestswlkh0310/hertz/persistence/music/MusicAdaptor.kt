@@ -12,6 +12,9 @@ class MusicAdaptor(
     override fun get(id: Int): Music? =
         musicRepository.findByIdOrNull(id)?.toDomain()
 
+    override fun getAll(id: Int): List<Music> =
+        musicRepository.findByUserId(id).map { it.toDomain() }
+
     override fun save(music: Music): Music =
         musicRepository.save(MusicEntity.of(music)).toDomain()
 

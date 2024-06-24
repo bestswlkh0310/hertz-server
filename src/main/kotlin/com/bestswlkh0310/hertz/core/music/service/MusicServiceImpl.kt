@@ -39,4 +39,9 @@ class MusicServiceImpl(
         musicPort.remove(musicId)
         return "success"
     }
+
+    override fun getAll(id: Int): List<MusicRes> {
+        val musics = musicPort.getAll(id)
+        return musics.map { MusicRes.of(it) }
+    }
 }
