@@ -20,6 +20,14 @@ sealed interface Api {
         const val GET = "/{id}"
     }
 
+    data object Music: Api {
+        const val PATH = "$V1/music"
+
+        const val SEARCH = "search"
+        const val SAVE = "save"
+        const val REMOVE = "remove/{musicId}"
+    }
+
     data object SpotLike : Api {
         const val PATH = "$V1/spot-like"
 
