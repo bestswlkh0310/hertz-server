@@ -1,4 +1,4 @@
-package com.bestswlkh0310.hertz.infra.jwt
+package com.bestswlkh0310.hertz.core.auth.domain
 
 enum class JwtType {
     ACCESS_TOKEN,
