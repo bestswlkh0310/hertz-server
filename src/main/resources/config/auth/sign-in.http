@@ -1,0 +1,7 @@
+POST {{root-path}}/api/v1/auth/sign-in
+Content-Type: application/json
+
+{
+  "email": "hhhello0507@gmail.com",
+  "password": "1"
+}

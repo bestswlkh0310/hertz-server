@@ -1,0 +1,2 @@
+GET {{root-path}}/user/1
+Authorization: {{test-token}}

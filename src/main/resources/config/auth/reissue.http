@@ -1,0 +1,7 @@
+# eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhoaGVsbG8wNTA3QGdtYWlsLmNvbSIsImlhdCI6MTcxOTE4OTgxMCwiZXhwIjoxNzE5Nzk0NjEwfQ.Q9kEaY95A-G3UPqqiA-hKfGifSDleywCCK5er5IM7F8
+POST {{root-path}}/api/v1/auth/reissue
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhoaGVsbG8wNTA3QGdtYWlsLmNvbSIsImlhdCI6MTcxOTE4OTgxMCwiZXhwIjoxNzE5Nzk0NjEwfQ.Q9kEaY95A-G3UPqqiA-hKfGifSDleywCCK5er5IM7F8"
+}
