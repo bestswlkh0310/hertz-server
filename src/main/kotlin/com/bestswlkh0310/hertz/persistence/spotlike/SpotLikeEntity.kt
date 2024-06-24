@@ -1,6 +1,7 @@
 package com.bestswlkh0310.hertz.persistence.spotlike
 
 import com.bestswlkh0310.hertz.core.spotlike.domain.SpotLike
+import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.music.MusicEntity
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
 import jakarta.persistence.CascadeType
@@ -16,7 +17,7 @@ import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
-@Entity(name = "spot_like")
+@Entity(name = TableName.SPOT_LIKE)
 @EntityListeners(AuditingEntityListener::class)
 class SpotLikeEntity(
     @Id

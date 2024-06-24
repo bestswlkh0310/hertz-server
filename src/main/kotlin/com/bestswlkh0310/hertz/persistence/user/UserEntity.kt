@@ -2,13 +2,14 @@ package com.bestswlkh0310.hertz.persistence.user
 
 import com.bestswlkh0310.hertz.core.user.domain.User
 import com.bestswlkh0310.hertz.core.user.domain.UserRole
+import com.bestswlkh0310.hertz.persistence.common.TableName
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 
-@Entity(name = "user")
+@Entity(name = TableName.USER)
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
