@@ -1,0 +1,9 @@
+POST localhost:8000/api/v1/music/save
+Content-Type: application/json
+Authorization: {{test-token}}
+
+{
+  "name": "test_name",
+  "description": "test_desc",
+  "url": "test_url"
+}

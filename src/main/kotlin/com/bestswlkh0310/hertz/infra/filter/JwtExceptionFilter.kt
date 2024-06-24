@@ -1,5 +1,6 @@
 package com.bestswlkh0310.hertz.infra.filter
 
+import com.bestswlkh0310.hertz.infra.exception.CustomException
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import com.bestswlkh0310.hertz.infra.response.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -20,7 +21,6 @@ class JwtExceptionFilter(
     private val objectMapper: ObjectMapper
 ): OncePerRequestFilter() {
 
-    @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -28,18 +28,11 @@ class JwtExceptionFilter(
     ) {
         try {
             filterChain.doFilter(request, response)
-        } catch (e: ExpiredJwtException) {
-            setErrorResponse(response)
-        } catch (e: MalformedJwtException) {
-            setErrorResponse(response)
-        } catch (e: UnsupportedJwtException) {
-            setErrorResponse(response)
-        } catch (e: IllegalArgumentException) {
+        } catch (e: Exception) {
             setErrorResponse(response)
         }
     }
 
-    @Throws(IOException::class)
     private fun setErrorResponse(response: HttpServletResponse) {
         try {
             val errorResponse = ErrorResponse.of(ErrorCode.INVALID_AUTH_TOKEN)
@@ -48,6 +41,7 @@ class JwtExceptionFilter(
             response.characterEncoding = "UTF-8"
             response.writer.write(objectMapper.writeValueAsString(errorResponse))
         } catch (e: IOException) {
+            println("ERROR")
             e.printStackTrace()
         }
     }
