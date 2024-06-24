@@ -1,7 +1,7 @@
 package com.bestswlkh0310.hertz.presentation.user
 
 import com.bestswlkh0310.hertz.core.user.service.UserService
-import com.bestswlkh0310.hertz.infra.common.Api
+import com.bestswlkh0310.hertz.presentation.common.Api
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

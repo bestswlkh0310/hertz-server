@@ -3,7 +3,8 @@ package com.bestswlkh0310.hertz.presentation.music
 import com.bestswlkh0310.hertz.core.music.req.EditMusicReq
 import com.bestswlkh0310.hertz.core.music.req.SaveMusicReq
 import com.bestswlkh0310.hertz.core.music.service.MusicService
-import com.bestswlkh0310.hertz.infra.common.Api
+import com.bestswlkh0310.hertz.presentation.common.Api
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -31,7 +32,7 @@ class MusicWebAdapter(
     fun save(
         @RequestBody req: SaveMusicReq
     ) = musicService.save(req)
-        .let { ResponseEntity.ok(it) }
+        .let { ResponseEntity.status(HttpStatus.CREATED).body(it) }
 
     @DeleteMapping(Api.Music.REMOVE)
     fun remove(
