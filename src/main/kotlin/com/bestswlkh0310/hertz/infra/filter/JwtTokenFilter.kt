@@ -1,23 +1,28 @@
 package com.bestswlkh0310.hertz.infra.filter
 
 import com.bestswlkh0310.hertz.infra.jwt.JwtTokenUtil
-import com.bestswlkh0310.hertz.infra.jwt.JwtType
+import com.bestswlkh0310.hertz.core.auth.domain.JwtType
+import com.bestswlkh0310.hertz.core.user.port.UserPort
+import com.bestswlkh0310.hertz.infra.exception.CustomException
+import com.bestswlkh0310.hertz.infra.exception.ErrorCode
+import com.bestswlkh0310.hertz.infra.security.CustomUserDetails
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 
 @Component
 class JwtTokenFilter(
-    private val jwtTokenUtil: JwtTokenUtil
+    private val jwtTokenUtil: JwtTokenUtil,
+    private val userPort: UserPort
 ) : OncePerRequestFilter() {
-
-    @Value("\${jwt.access-token-secret}")
-    lateinit var accessTokenSecret: String
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -26,41 +31,30 @@ class JwtTokenFilter(
     ) {
         val authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
 
-        // Header의 Authorization 값이 비어있으면 => Jwt Token을 전송하지 않음 => 로그인 하지 않음
-        if (authorizationHeader == null) {
+        // validation
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response)
             return
         }
 
-        // Header의 Authorization 값이 'Bearer '로 시작하지 않으면 => 잘못된 토큰
-        if (!authorizationHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response)
-            return
-        }
-
-        // 전송받은 값에서 'Bearer ' 뒷부분(Jwt Token) 추출
         val token = authorizationHeader.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
 
-        // 전송받은 Jwt Token이 만료되었으면 => 다음 필터 진행(인증 X)
         if (jwtTokenUtil.isExpired(token, JwtType.ACCESS_TOKEN)) {
             filterChain.doFilter(request, response)
             return
         }
 
-        // Jwt Token 에서 username 추출
-        val username = jwtTokenUtil.getUsername(token, JwtType.ACCESS_TOKEN)
+        // find user
+        val email = jwtTokenUtil.getEmail(token, JwtType.ACCESS_TOKEN)
+        val user = userPort.getByEmail(email) ?: throw CustomException(ErrorCode.NOT_FOUND)
 
-        // 추출한 username 로 User 찾아오기
-//        val user = userService.getUser(username)
-//
-//        // loginUser 정보로 UsernamePasswordAuthenticationToken 발급
-//        val authenticationToken = UsernamePasswordAuthenticationToken(
-//            user.username, null, arrayListOf(SimpleGrantedAuthority(user.role.name))
-//        )
-//        authenticationToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-//
-//        // 권한 부여
-//        SecurityContextHolder.getContext().authentication = authenticationToken
-//        filterChain.doFilter(request, response)
+        val authenticationToken = UsernamePasswordAuthenticationToken(
+            CustomUserDetails(user), null, listOf(SimpleGrantedAuthority(user.role.name))
+        )
+        authenticationToken.details = WebAuthenticationDetailsSource().buildDetails(request)
+
+        // give permission
+        SecurityContextHolder.getContext().authentication = authenticationToken
+        filterChain.doFilter(request, response)
     }
 }

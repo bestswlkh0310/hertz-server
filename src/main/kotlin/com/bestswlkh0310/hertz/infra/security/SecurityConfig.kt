@@ -1,10 +1,9 @@
-package com.bestswlkh0310.hertz.infra.config
+package com.bestswlkh0310.hertz.infra.security
 
 import com.bestswlkh0310.hertz.infra.common.Api
 import com.bestswlkh0310.hertz.infra.exception.ForbiddenAuthenticationEntryPoint
 import com.bestswlkh0310.hertz.infra.filter.JwtExceptionFilter
 import com.bestswlkh0310.hertz.infra.filter.JwtTokenFilter
-import com.bestswlkh0310.hertz.infra.jwt.JwtTokenUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -17,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtTokenUtil: JwtTokenUtil,
     private val jwtTokenFilter: JwtTokenFilter,
     private val jwtExceptionFilter: JwtExceptionFilter,
     private val forbiddenAuthenticationEntryPoint: ForbiddenAuthenticationEntryPoint
@@ -45,10 +43,9 @@ class SecurityConfig(
             )
             .authorizeHttpRequests {
                 it.requestMatchers(
-                    "${Api.User.PATH}${Api.User.SIGN_UP}",
-                    "${Api.User.PATH}${Api.User.SIGN_IN}",
-                    "${Api.User.PATH}${Api.User.REFRESH}",
-                    "${Api.User.PATH}${Api.User.SEND_EMAIL_CODE}",
+                    "${Api.Auth.PATH}${Api.Auth.SIGN_UP}",
+                    "${Api.Auth.PATH}${Api.Auth.SIGN_IN}",
+                    "${Api.Auth.PATH}${Api.Auth.REISSUE}",
                     "/error"
                 ).permitAll()
                     .anyRequest()

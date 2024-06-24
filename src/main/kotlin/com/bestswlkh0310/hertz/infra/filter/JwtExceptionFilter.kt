@@ -1,7 +1,5 @@
 package com.bestswlkh0310.hertz.infra.filter
 
-
-import com.bestswlkh0310.hertz.infra.response.BaseResponse
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import com.bestswlkh0310.hertz.infra.response.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -31,29 +29,26 @@ class JwtExceptionFilter(
         try {
             filterChain.doFilter(request, response)
         } catch (e: ExpiredJwtException) {
-            setErrorResponse(response, ErrorCode.INVALID_AUTH_TOKEN)
+            setErrorResponse(response)
         } catch (e: MalformedJwtException) {
-            setErrorResponse(response, ErrorCode.INVALID_AUTH_TOKEN)
+            setErrorResponse(response)
         } catch (e: UnsupportedJwtException) {
-            setErrorResponse(response, ErrorCode.INVALID_AUTH_TOKEN)
+            setErrorResponse(response)
         } catch (e: IllegalArgumentException) {
-            setErrorResponse(response, ErrorCode.INVALID_AUTH_TOKEN)
-        }
-    }
-
-    private fun setErrorResponse(response: HttpServletResponse, error: ErrorCode) {
-        try {
-            responseToClient(response, ErrorResponse.of(error))
-        } catch (e: IOException) {
-            e.printStackTrace()
+            setErrorResponse(response)
         }
     }
 
     @Throws(IOException::class)
-    private fun responseToClient(response: HttpServletResponse, errorResponse: ErrorResponse) {
-        response.status = errorResponse.status
-        response.contentType = MediaType.APPLICATION_JSON_VALUE
-        response.characterEncoding = "UTF-8"
-        response.writer.write(objectMapper.writeValueAsString(errorResponse))
+    private fun setErrorResponse(response: HttpServletResponse) {
+        try {
+            val errorResponse = ErrorResponse.of(ErrorCode.INVALID_AUTH_TOKEN)
+            response.status = errorResponse.status
+            response.contentType = MediaType.APPLICATION_JSON_VALUE
+            response.characterEncoding = "UTF-8"
+            response.writer.write(objectMapper.writeValueAsString(errorResponse))
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 }
