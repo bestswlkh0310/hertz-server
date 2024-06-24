@@ -10,6 +10,7 @@ enum class ErrorCode(
     ALREADY_EXISTS(HttpStatus.UNPROCESSABLE_ENTITY, "이미 존재합니다"),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
+    UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자입니다."),
     INVALID_AUTH_TOKEN(HttpStatus.UNAUTHORIZED, "권한 정보가 없는 토큰입니다."),
 
     /* 403: FORBIDDEN : 서버가 요청을 이해하지만 승인을 거부함  */

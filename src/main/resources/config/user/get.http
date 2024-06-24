@@ -1,2 +1,3 @@
-GET {{root-path}}/user/1
+GET {{root-path}}/api/v1/usr/1
 Authorization: {{test-token}}
+Content-Type: application/json

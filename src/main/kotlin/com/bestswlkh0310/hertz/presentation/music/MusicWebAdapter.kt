@@ -1,4 +1,4 @@
-package com.bestswlkh0310.hertz.presentation
+package com.bestswlkh0310.hertz.presentation.music
 
 import com.bestswlkh0310.hertz.core.music.req.SaveMusicReq
 import com.bestswlkh0310.hertz.core.music.service.MusicService

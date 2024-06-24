@@ -1,5 +1,6 @@
 package com.bestswlkh0310.hertz.infra.exception
 
+import com.bestswlkh0310.hertz.infra.response.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
@@ -15,31 +16,22 @@ class ForbiddenAuthenticationEntryPoint(
     private val objectMapper: ObjectMapper
 ) : AuthenticationEntryPoint {
 
-    @Throws(IOException::class, ServletException::class)
     override fun commence(
         request: HttpServletRequest?,
         response: HttpServletResponse,
         authException: AuthenticationException?
     ) {
+        println("forbidden")
         setResponse(response)
     }
 
     @Throws(IOException::class)
     private fun setResponse(response: HttpServletResponse) {
-        val errorCode = ErrorCode.FORBIDDEN
-
-        response.status = errorCode.httpStatus.value()
+        val errorResponse = ErrorResponse.of(ErrorCode.FORBIDDEN)
+        response.status = errorResponse.status
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         response.characterEncoding = "UTF-8"
-
-        val errorResponse = ErrorResponse(
-            status = errorCode.httpStatus.value(),
-            code = errorCode.httpStatus.reasonPhrase,
-            message = errorCode.message
-        )
-        val responseBody = objectMapper.writeValueAsString(errorResponse)
-
-        response.writer.write(responseBody)
+        response.writer.write(objectMapper.writeValueAsString(errorResponse))
         response.writer.flush()
     }
 }

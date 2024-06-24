@@ -56,6 +56,7 @@ class JwtTokenUtil(
                 .setSigningKey(getSecretByType(type).toByteArray())
                 .parseClaimsJws(token).body
         } catch (e: Exception) {
+            e.printStackTrace()
             throw CustomException(ErrorCode.INVALID_AUTH_TOKEN)
         }
 
