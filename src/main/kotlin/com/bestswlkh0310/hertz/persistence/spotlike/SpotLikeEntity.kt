@@ -5,12 +5,13 @@ import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.music.MusicEntity
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
-import jakarta.persistence.*
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Entity
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import java.time.LocalDateTime
 
 @Entity(name = TableName.SPOT_LIKE)
-@EntityListeners(AuditingEntityListener::class)
 class SpotLikeEntity(
 
     override val id: Int,
