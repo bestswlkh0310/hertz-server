@@ -1,20 +1,16 @@
 package com.bestswlkh0310.hertz.persistence.music
 
 import com.bestswlkh0310.hertz.core.music.domain.Music
+import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
 import jakarta.persistence.*
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
-@Entity(name = TableName.MUSIC)
-@EntityListeners(AuditingEntityListener::class)
+@Entity
+@Table(name = TableName.MUSIC)
 class MusicEntity(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    val id: Int,
+    override val id: Int,
 
     @Column(nullable = false)
     val name: String,
@@ -25,14 +21,13 @@ class MusicEntity(
     @Column(nullable = false)
     val url: String,
 
-    @CreatedDate
-    @Column(nullable = false)
-    val createdAt: LocalDateTime,
-
     @ManyToOne(targetEntity = UserEntity::class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    val user: UserEntity
-) {
+    val user: UserEntity,
+
+    override val createdAt: LocalDateTime
+) : BaseIdEntity(id) {
+
     fun toDomain() = Music(
         id = id,
         name = name,

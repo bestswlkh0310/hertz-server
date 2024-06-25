@@ -9,6 +9,7 @@ import com.bestswlkh0310.hertz.core.user.port.GetCurrentUserPort
 import com.bestswlkh0310.hertz.infra.exception.CustomException
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class PlaylistServiceImpl(
@@ -26,7 +27,8 @@ class PlaylistServiceImpl(
             title = req.title,
             thumbnailUrl = req.thumbnailUrl,
             musics = musics,
-            user = user
+            user = user,
+            createdAt = LocalDateTime.now(),
         )
         val createdPlaylist = playlistPort.create(playlist)
         return PlaylistRes.of(createdPlaylist)
