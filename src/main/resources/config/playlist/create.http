@@ -1,0 +1,11 @@
+POST {{root-path}}/api/v1/playlist/create
+Content-Type: application/json
+Authorization: {{test-token}}
+
+{
+  "title": "temp title",
+  "thumbnailUrl": "temp thumbnail",
+  "musicIds": [
+    1
+  ]
+}

@@ -9,6 +9,7 @@ import com.bestswlkh0310.hertz.infra.exception.CustomException
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 @Transactional
@@ -22,7 +23,12 @@ class SpotLikeServiceImpl(
         val music = musicPort.get(musicId) ?: throw CustomException(ErrorCode.NOT_FOUND)
 
         val exists = spotLikePort.exists(user.id, musicId)
-        val spotLike = SpotLike(user = user, music = music)
+        val spotLike = SpotLike(
+            id = 0,
+            user = user,
+            music = music,
+            createdAt = LocalDateTime.now()
+        )
         return if (exists) {
             spotLikePort.remove(user.id, musicId)
             SpotLikeRes.of(spotLike)

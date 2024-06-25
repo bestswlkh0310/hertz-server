@@ -8,7 +8,7 @@ data class Music(
     val name: String,
     val description: String,
     val url: String,
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime,
     /**
      * user: Has this music
      */

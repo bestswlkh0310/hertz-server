@@ -1,6 +1,5 @@
 package com.bestswlkh0310.hertz.persistence.user
 
-import com.bestswlkh0310.hertz.core.user.domain.User
 import com.bestswlkh0310.hertz.core.user.port.GetCurrentUserPort
 import com.bestswlkh0310.hertz.infra.security.CustomUserDetails
 import org.springframework.security.core.context.SecurityContextHolder

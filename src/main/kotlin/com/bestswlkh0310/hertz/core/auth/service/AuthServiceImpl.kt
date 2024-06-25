@@ -39,7 +39,13 @@ class AuthServiceImpl(
             throw CustomException(ErrorCode.ALREADY_EXISTS)
         }
 
-        val user = User(email = email, password = password, role = UserRole.MEMBER, createdAt = LocalDateTime.now())
+        val user = User(
+            id = 0,
+            email = email,
+            password = password,
+            role = UserRole.MEMBER,
+            createdAt = LocalDateTime.now()
+        )
         userPort.insert(user)
         val token = tokenPort.createToken(email)
         return TokenRes.of(token)
@@ -51,7 +57,7 @@ class AuthServiceImpl(
             throw CustomException(ErrorCode.INVALID_AUTH_TOKEN)
         }
 
-        val newToken =  tokenPort.reissue(req.refreshToken)
+        val newToken = tokenPort.reissue(req.refreshToken)
         return TokenRes.of(newToken)
     }
 }

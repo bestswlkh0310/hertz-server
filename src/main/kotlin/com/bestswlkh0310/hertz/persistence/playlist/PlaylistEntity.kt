@@ -1,9 +1,11 @@
 package com.bestswlkh0310.hertz.persistence.playlist
 
 import com.bestswlkh0310.hertz.core.playlist.domain.Playlist
+import com.bestswlkh0310.hertz.core.playlistmusic.domain.PlaylistMusic
 import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.music.MusicEntity
+import com.bestswlkh0310.hertz.persistence.playlistmusic.PlaylistMusicEntity
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -17,10 +19,7 @@ class PlaylistEntity(
     @Column(nullable = true)
     val thumbnailUrl: String?,
 
-    @OneToMany(targetEntity = MusicEntity::class, fetch = FetchType.LAZY)
-    val musics: List<MusicEntity> = arrayListOf(),
-
-    @ManyToOne(targetEntity = UserEntity::class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = UserEntity::class, fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
     @JoinColumn(name = "user_id", nullable = false)
     val user: UserEntity,
 
@@ -30,7 +29,6 @@ class PlaylistEntity(
         id = id,
         title = title,
         thumbnailUrl = thumbnailUrl,
-        musics = musics.map { it.toDomain() },
         user = user.toDomain(),
         createdAt = createdAt
     )

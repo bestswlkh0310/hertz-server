@@ -5,10 +5,7 @@ import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.music.MusicEntity
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
-import jakarta.persistence.Entity
-import jakarta.persistence.EntityListeners
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 import java.time.LocalDateTime
 
@@ -18,11 +15,11 @@ class SpotLikeEntity(
 
     override val id: Int,
 
-    @ManyToOne(targetEntity = UserEntity::class)
+    @ManyToOne(targetEntity = UserEntity::class, cascade = [CascadeType.REMOVE])
     @JoinColumn(referencedColumnName = "id", name = "user_id")
     val user: UserEntity,
 
-    @ManyToOne(targetEntity = MusicEntity::class)
+    @ManyToOne(targetEntity = MusicEntity::class, cascade = [CascadeType.REMOVE])
     @JoinColumn(referencedColumnName = "id", name = "music_id")
     val music: MusicEntity,
 

@@ -9,6 +9,7 @@ import com.bestswlkh0310.hertz.core.user.port.GetCurrentUserPort
 import com.bestswlkh0310.hertz.infra.exception.CustomException
 import com.bestswlkh0310.hertz.infra.exception.ErrorCode
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class MusicServiceImpl(
@@ -23,10 +24,12 @@ class MusicServiceImpl(
     override fun save(req: SaveMusicReq): MusicRes {
         val user = getCurrentUserPort.get() ?: throw CustomException(ErrorCode.NOT_FOUND)
         val music = Music(
+            id = 0,
             name = req.name,
             description = req.description,
             url = req.url,
-            user = user
+            user = user,
+            createdAt = LocalDateTime.now(),
         )
         val savedMusic = musicPort.save(music)
         return MusicRes.of(savedMusic)
