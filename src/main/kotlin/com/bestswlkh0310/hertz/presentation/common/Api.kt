@@ -6,6 +6,10 @@ sealed interface Api {
         private const val V1 = "/api/v1"
     }
 
+    data object Health: Api {
+        const val PATH = "$V1/health"
+    }
+
     data object Auth : Api {
         const val PATH = "$V1/auth"
 
