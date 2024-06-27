@@ -7,9 +7,9 @@ data class ErrorResponse(
     val message: String
 ) {
     companion object {
-        fun of(errorCode: ErrorCode) = ErrorResponse(
+        fun of(errorCode: ErrorCode, message: String = errorCode.message) = ErrorResponse(
             status = errorCode.httpStatus.value(),
-            message = errorCode.message
+            message = message
         )
     }
 }

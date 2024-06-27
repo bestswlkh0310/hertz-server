@@ -7,6 +7,7 @@ enum class ErrorCode(
     val message: String
 ) {
     /* 400 BAD_REQUEST : 잘못된 요청 */
+    INVALID_ARGUMENT(HttpStatus.BAD_REQUEST, "요청이 유효하지 않습니다."),
     ALREADY_EXISTS(HttpStatus.UNPROCESSABLE_ENTITY, "이미 존재합니다"),
 
     /* 401 UNAUTHORIZED : 인증되지 않은 사용자 */
