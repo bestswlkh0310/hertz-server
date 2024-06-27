@@ -1,7 +1,7 @@
 package com.bestswlkh0310.hertz.persistence.spotlike
 
 import com.bestswlkh0310.hertz.core.spotlike.domain.SpotLike
-import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
+import com.bestswlkh0310.hertz.persistence.common.BaseIdAndTimeEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.music.MusicEntity
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
@@ -26,7 +26,7 @@ class SpotLikeEntity(
 
     override val createdAt: LocalDateTime
 
-) : BaseIdEntity(id) {
+) : BaseIdAndTimeEntity(id) {
     fun toDomain() = SpotLike(
         id = id,
         user = user.toDomain(),

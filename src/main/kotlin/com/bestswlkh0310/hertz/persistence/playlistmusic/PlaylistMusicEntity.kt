@@ -1,7 +1,7 @@
 package com.bestswlkh0310.hertz.persistence.playlistmusic
 
 import com.bestswlkh0310.hertz.core.playlistmusic.domain.PlaylistMusic
-import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
+import com.bestswlkh0310.hertz.persistence.common.BaseIdAndTimeEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.music.MusicEntity
 import com.bestswlkh0310.hertz.persistence.playlist.PlaylistEntity
@@ -19,7 +19,7 @@ class PlaylistMusicEntity(
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.REMOVE])
     @JoinColumn(name = "playlist_id", nullable = false)
     val playlist: PlaylistEntity
-) : BaseIdEntity(id) {
+) : BaseIdAndTimeEntity() {
     fun toDomain() = PlaylistMusic(
         id = id,
         music = music.toDomain(),

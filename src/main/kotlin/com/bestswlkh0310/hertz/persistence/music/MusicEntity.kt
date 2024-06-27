@@ -1,7 +1,7 @@
 package com.bestswlkh0310.hertz.persistence.music
 
 import com.bestswlkh0310.hertz.core.music.domain.Music
-import com.bestswlkh0310.hertz.persistence.common.BaseIdEntity
+import com.bestswlkh0310.hertz.persistence.common.BaseIdAndTimeEntity
 import com.bestswlkh0310.hertz.persistence.common.TableName
 import com.bestswlkh0310.hertz.persistence.user.UserEntity
 import jakarta.persistence.*
@@ -26,7 +26,7 @@ class MusicEntity(
     val user: UserEntity,
 
     override val createdAt: LocalDateTime
-) : BaseIdEntity(id) {
+) : BaseIdAndTimeEntity() {
 
     fun toDomain() = Music(
         id = id,

@@ -6,6 +6,5 @@ import jakarta.persistence.*
 abstract class BaseIdEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, unique = false)
-    open val id: Int
-) : BaseTimeEntity()
+    open val id: Int = 0
+)
